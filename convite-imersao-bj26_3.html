@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Primeira Imersão Online — BJ 26</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --azul-escuro: #0D1B5E;
+    --azul-medio: #1A3A8F;
+    --azul-ceu: #3B9CD9;
+    --amarelo: #F5C400;
+    --verde: #1A7A3C;
+    --branco: #FFFFFF;
+    --preto: #0A0A0A;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--azul-escuro);
+    color: var(--branco);
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    background: var(--azul-escuro);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 60px 8vw 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .geo {
+    position: absolute;
+    pointer-events: none;
+  }
+
+  .geo-1 {
+    width: 180px; height: 180px;
+    background: var(--amarelo);
+    border-radius: 24px;
+    bottom: -40px; right: 12vw;
+    transform: rotate(12deg);
+    opacity: 0.9;
+  }
+
+  .geo-2 {
+    width: 120px; height: 120px;
+    background: var(--azul-ceu);
+    border-radius: 16px;
+    bottom: 60px; right: calc(12vw + 140px);
+    transform: rotate(-8deg);
+    opacity: 0.85;
+  }
+
+  .geo-3 {
+    width: 90px; height: 90px;
+    background: var(--verde);
+    border-radius: 12px;
+    bottom: 140px; right: calc(12vw + 20px);
+    transform: rotate(20deg);
+    opacity: 0.9;
+  }
+
+  .geo-star {
+    position: absolute;
+    top: 48px; right: 10vw;
+    opacity: 0.08;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--amarelo);
+    color: var(--preto);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 8px 18px;
+    border-radius: 100px;
+    margin-bottom: 32px;
+    width: fit-content;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .hero-title {
+    font-size: clamp(2.8rem, 7vw, 6.5rem);
+    font-weight: 900;
+    line-height: 1.0;
+    color: var(--branco);
+    margin-bottom: 4px;
+    animation: fadeUp 0.6s ease both 0.1s;
+  }
+
+  .hero-title .highlight {
+    color: var(--amarelo);
+  }
+
+  .hero-subtitle {
+    font-size: clamp(1rem, 2.5vw, 1.5rem);
+    font-weight: 600;
+    color: var(--azul-ceu);
+    margin-bottom: 40px;
+    animation: fadeUp 0.6s ease both 0.2s;
+  }
+
+  .hero-desc {
+    font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+    font-weight: 400;
+    color: rgba(255,255,255,0.7);
+    max-width: 520px;
+    line-height: 1.7;
+    animation: fadeUp 0.6s ease both 0.3s;
+  }
+
+  .date-badge {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background: var(--azul-medio);
+    border: 2px solid var(--azul-ceu);
+    border-radius: 16px;
+    padding: 20px 32px;
+    margin-top: 40px;
+    width: fit-content;
+    animation: fadeUp 0.6s ease both 0.4s;
+  }
+
+  .date-badge .label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--azul-ceu);
+    margin-bottom: 6px;
+  }
+
+  .date-badge .date {
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    font-weight: 900;
+    color: var(--branco);
+    line-height: 1;
+  }
+
+  .date-badge .date span {
+    color: var(--amarelo);
+  }
+
+  /* ── STRIP ── */
+  .strip {
+    height: 8px;
+    background: linear-gradient(90deg,
+      var(--amarelo) 0%, var(--amarelo) 33%,
+      var(--verde) 33%, var(--verde) 66%,
+      var(--azul-ceu) 66%, var(--azul-ceu) 100%
+    );
+  }
+
+  /* ── INFO ── */
+  .info {
+    background: #0a1244;
+    padding: 72px 8vw;
+  }
+
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--amarelo);
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(255,255,255,0.1);
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+  }
+
+  .card {
+    background: var(--azul-medio);
+    border-radius: 20px;
+    padding: 32px 28px;
+    border: 1px solid rgba(59,156,217,0.2);
+    transition: transform 0.2s, border-color 0.2s;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .card:hover { transform: translateY(-5px); border-color: var(--azul-ceu); }
+  .card:nth-child(2) { animation-delay: 0.1s; }
+  .card:nth-child(3) { animation-delay: 0.2s; }
+
+  .card-icon { font-size: 2rem; margin-bottom: 16px; display: block; }
+
+  .card-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--azul-ceu);
+    margin-bottom: 8px;
+  }
+
+  .card-value {
+    font-size: 1.7rem;
+    font-weight: 900;
+    color: var(--branco);
+    line-height: 1.1;
+  }
+
+  .card-note {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.45);
+    margin-top: 8px;
+    font-weight: 500;
+  }
+
+  /* ── FROM ── */
+  .from {
+    background: var(--verde);
+    padding: 64px 8vw;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .from::after {
+    content: '';
+    position: absolute;
+    right: -60px; top: -60px;
+    width: 240px; height: 240px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.07);
+  }
+
+  .from-pre {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.65);
+    margin-bottom: 12px;
+  }
+
+  .from-title {
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-weight: 900;
+    color: var(--branco);
+    margin-bottom: 32px;
+    line-height: 1.1;
+  }
+
+  .from-title span { color: var(--amarelo); }
+
+  .names-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .name-chip {
+    background: rgba(255,255,255,0.15);
+    border: 1.5px solid rgba(255,255,255,0.3);
+    color: var(--branco);
+    font-size: 0.9rem;
+    font-weight: 700;
+    padding: 10px 22px;
+    border-radius: 100px;
+    letter-spacing: 0.5px;
+    transition: background 0.2s, border-color 0.2s;
+  }
+
+  .name-chip:hover {
+    background: rgba(255,255,255,0.25);
+    border-color: var(--amarelo);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--preto);
+    padding: 32px 8vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .footer-left {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+  }
+
+  .bj-badge {
+    background: var(--azul-escuro);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.6);
+    text-transform: uppercase;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 600px) {
+    .geo-1, .geo-2, .geo-3 { display: none; }
+    .hero { padding: 48px 6vw 64px; }
+    .info, .from, footer { padding-left: 6vw; padding-right: 6vw; }
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="geo geo-1"></div>
+  <div class="geo geo-2"></div>
+  <div class="geo geo-3"></div>
+
+  <svg class="geo-star" width="300" height="300" viewBox="0 0 200 200" fill="white" xmlns="http://www.w3.org/2000/svg">
+    <path d="M100 0 L111 74 L183 27 L136 89 L200 100 L136 111 L183 173 L111 126 L100 200 L89 126 L17 173 L64 111 L0 100 L64 89 L17 27 L89 74 Z"/>
+  </svg>
+
+  <div class="hero-eyebrow">✦ Brasil Júnior · 2026</div>
+
+  <h1 class="hero-title">
+    Primeira<br>
+    <span class="highlight">Imersão</span><br>
+    Online
+  </h1>
+
+  <p class="hero-subtitle">BJ 26 — Ciclo 01</p>
+
+  <p class="hero-desc">
+    A primeira imersão online do nosso time chegou. Dois dias para mergulhar fundo, conectar e fazer acontecer — do jeito que só a gente sabe.
+  </p>
+
+  <div class="date-badge">
+    <span class="label">📅 salva no calendário</span>
+    <span class="date"><span>1</span> e <span>2</span> de Maio</span>
+  </div>
+</section>
+
+<div class="strip"></div>
+
+<section class="info">
+  <div class="section-label">Informações</div>
+  <div class="cards">
+    <div class="card">
+      <span class="card-icon">📅</span>
+      <div class="card-label">Quando</div>
+      <div class="card-value">1 e 2 de Maio</div>
+      <div class="card-note">Fim de semana — bloqueia aí ✓</div>
+    </div>
+    <div class="card">
+      <span class="card-icon">💻</span>
+      <div class="card-label">Formato</div>
+      <div class="card-value">Online</div>
+      <div class="card-note">Plataforma a confirmar em breve</div>
+    </div>
+    <div class="card">
+      <span class="card-icon">🕐</span>
+      <div class="card-label">Horário</div>
+      <div class="card-value">Em breve</div>
+      <div class="card-note">Fique de olho nas comunicações</div>
+    </div>
+  </div>
+</section>
+
+<div class="strip"></div>
+
+<section class="from">
+  <p class="from-pre">Com carinho, de</p>
+  <h2 class="from-title">Tribo 5 — <span>VPGG 💛</span></h2>
+  <div class="names-grid">
+    <span class="name-chip">Ceci</span>
+    <span class="name-chip">Hikari</span>
+    <span class="name-chip">Vit</span>
+    <span class="name-chip">Pesca</span>
+    <span class="name-chip">Gabi</span>
+    <span class="name-chip">Arissa</span>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-left">Brasil Júnior · Somos o Movimento em Todo o Brasil</div>
+  <div class="bj-badge">BJ 26</div>
+</footer>
+
+</body>
+</html>
